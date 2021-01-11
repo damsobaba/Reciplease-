@@ -9,8 +9,7 @@ import Foundation
 import Alamofire
 
 
-var key = "f80904bfd20af14390731a06fca44c7e"
-var id = "5dd13b2f"
+
 
 
 
@@ -31,7 +30,7 @@ final class RequestService {
 
     func getData(q: String,  callback: @escaping (Result<Recipes, NetworkError>) -> Void) {
         guard let url = URL(string: "https://api.edamam.com/search") else { return }
-        let parameters =  [("app_id", id), ("app_key", key), ("q", q)]
+        let parameters =  [("app_id", ApiConfig.apiId), ("app_key", ApiConfig.apiKey), ("q", q)]
         let encoding = encode(baseUrl: url, with: parameters)
         Logger(url: url).show()
         session.request(url: encoding ) { dataResponse in

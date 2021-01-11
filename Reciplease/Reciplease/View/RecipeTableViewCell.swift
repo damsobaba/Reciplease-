@@ -21,14 +21,14 @@ class RecipeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var ingredientsLabel: UILabel!
     
-    
+
+   
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         changeBackroundStackView()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -37,35 +37,86 @@ class RecipeTableViewCell: UITableViewCell {
         stackView.layer.cornerRadius = 10
         stackView.layer.borderColor = UIColor.white.cgColor
         stackView.layer.borderWidth = 2
-        recipeImageView.layer.shadowRadius = 10
+        recipeImageView.layer.shadowRadius = 40
+        recipeImageView.layer.shadowOpacity = 40
+        
+        
         //            mettre ombrage sur phot
     }
+  
     
     var recipe: Hit? {
         didSet {
             guard let recipe = recipe else { return }
+            
             titleLabel.text = recipe.recipe.label
-           recipeImageView.load(url: URL(string: recipe.recipe.image)!)
-            timeLabel.text = String(recipe.recipe.totalTime)
+            recipeImageView.load(url: URL(string: recipe.recipe.image)!)
+            timeLabel.text = recipe.recipe.totalTime.convertIntToTime 
             yieldLabel.text = String(recipe.recipe.yield)
             ingredientsLabel.text = recipe.recipe.ingredients[0].text
 
-        
+
+        }
+    }
+
+    
+    var favoriteRecipe: FavoriteFood? {
+        didSet {
+            titleLabel.text = favoriteRecipe?.name
+     
+            timeLabel.text = favoriteRecipe?.totaTime
+            yieldLabel.text = favoriteRecipe?.yield
+            ingredientsLabel.text = favoriteRecipe?.ingredients
+            recipeImageView.load(url: URL(string: (favoriteRecipe?.image)!)!)
+            
         }
     }
 }
 
-    extension UIImageView {
-          func load(url:URL) {
-              DispatchQueue.global().async { [weak self] in
-                  if let data = try? Data(contentsOf: url) {
-                      if let image = UIImage(data: data) {
-                          DispatchQueue.main.async {
-                              self?.image = image
-                          }
-                      }
-                  }
-              }
-          }
+extension UIImageView {
+    func load(url:URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
     
 }
+
+
+extension Int {
+    
+    /// Convert Int to time in String
+    var convertIntToTime: String {
+        if self == 0 {
+            let timeNull = "--"
+            return timeNull
+        } else {
+            let minutes = self % 60
+            let hours = self / 60
+            let timeFormatString = String(format: "%01dh%02d", hours, minutes)
+            let timeFormatStringMin = String(format: "%02dm", minutes)
+            let timeFormatNoMin = String(format: "%01dh", hours)
+            let timeFormatStringLessTenMin = String(format: "%01dm", minutes)
+            if self < 60 {
+                if minutes < 10 {
+                return timeFormatStringLessTenMin
+                }
+                return timeFormatStringMin
+            } else if minutes == 0 {
+                return timeFormatNoMin
+            } else {
+                return timeFormatString
+            }
+        }
+    }
+}
+
+
+
+

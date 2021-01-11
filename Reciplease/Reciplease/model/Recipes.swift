@@ -96,3 +96,4 @@ struct Total: Codable {
     let quantity: Double
     let unit: Unit
 }
+

@@ -8,12 +8,15 @@
 import UIKit
 
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UITextFieldDelegate{
     
     // MARK: - Outlets
     
-    @IBOutlet weak var texField: UITextField!
+    @IBOutlet weak var searchRecipeButton: UIButton!
+    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var tableView: UITableView!  { didSet { tableView.tableFooterView = UIView() } }
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Properties
     private var recipes: Recipes?
@@ -37,36 +40,65 @@ class SearchViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func searchButtonTapped(_ sender: Any) {
-        
-        service.getData(q: ingredients.joined()) { result in
+        toggleActivityIndicator(shown: true)
+        service.getData(q: ingredients.joined(separator: ",")) { result in
             switch result {
             case .success(let search):
+                self.toggleActivityIndicator(shown: false)
                 self.recipes = search
                 self.performSegue(withIdentifier: "Result", sender: nil)
             case .failure(let error):
+                self.presentAlert()
+                self.toggleActivityIndicator(shown: false)
                 print(error)
             }
         }
     }
     
+    
+    
+    //MARK: - Methods
+    
+    // Method to dissmiss keyboard when user tap on "done"
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+    private func changeTableView(){
+        tableView.backgroundColor = UIColor.clear
+        UITableViewCell.appearance().backgroundColor = UIColor.clear
+    }
+    
+    ///enable to show activiy controler while loading
+    private func toggleActivityIndicator(shown: Bool) {
+        activityIndicator.isHidden = !shown
+        searchRecipeButton.isHidden = shown
+    }
+    
+    //MARK: - Actions
+    
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        textField.resignFirstResponder()
+    }
+    
     @IBAction func addRecipeButtonTaped(_ sender: Any) {
         
-        guard let ingredient = texField.text else { return }
+        guard let ingredient = textField.text , !ingredient.isBlank else {
+            presentAlertWrongIngredients()
+            return }
         ingredients.append(ingredient)
         tableView.reloadData()
-        texField.text = ""
+        textField.text = ""
     }
     
     @IBAction func clearButtonTapped(_ sender: Any) {
         ingredients.removeAll()
         tableView.reloadData()
     }
-    
-    func changeTableView(){
-        tableView.backgroundColor = UIColor.clear
-        UITableViewCell.appearance().backgroundColor = UIColor.clear
-    }
 }
+
 
 // MARK: - UITableViewDataSource
 
@@ -85,7 +117,7 @@ extension SearchViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension SearchViewController: UITableViewDelegate {
+extension SearchViewController: UITableViewDelegate  {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()
         label.text = "Add some ingredients in the list"
@@ -98,8 +130,15 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return ingredients.isEmpty ? 200 : 0
     }
+    
+    // delete a row in tableView
+        func tableView(_ tableView: UITableView,
+                       commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+            if editingStyle == .delete {
+                ingredients.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+
 }
-
-
-
 

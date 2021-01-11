@@ -12,6 +12,7 @@ class RecipeViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     
     var recipes: Recipes?
+    var recipeDisplay: RecipeDisplay?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,11 +23,13 @@ class RecipeViewController: UIViewController {
         guard segue.identifier == "DetailRecipe" else {
             return
         }
-     
-   
-    
+        
+        guard let recipesVc = segue.destination as? DetailViewController else {return}
+             recipesVc.recipeDisplay = recipeDisplay
+         }
+
 }
-}
+
 
 
 
@@ -46,7 +49,16 @@ extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let recipe = recipes?.hits[indexPath.row]
+        let recipeDisplay = RecipeDisplay(label: (recipe?.recipe.label)!,image: (recipe?.recipe.image)!, yield: (String((recipe?.recipe.yield)!)) ,time: (String((recipe?.recipe.totalTime.convertIntToTime)!)), ingredients: (recipe?.recipe.ingredientLines)!, url: (recipe?.recipe.url)!)
+        
+          self.recipeDisplay = recipeDisplay
+              
         performSegue(withIdentifier:"DetailRecipe", sender: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
     }
 }
 
