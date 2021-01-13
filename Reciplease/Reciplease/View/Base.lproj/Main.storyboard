@@ -31,7 +31,7 @@
             </objects>
             <point key="canvasLocation" x="-2484" y="850"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Favorite-->
         <scene sceneID="2vr-F2-Xfh">
             <objects>
                 <tableViewController id="dla-jp-FRP" customClass="FavoriteViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
@@ -44,14 +44,15 @@
                             <outlet property="delegate" destination="dla-jp-FRP" id="5TC-OV-RRC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="QbA-6y-QSm"/>
+                    <navigationItem key="navigationItem" title="Favorite" id="QbA-6y-QSm"/>
                     <connections>
                         <outlet property="favoriteTableView" destination="YH2-dv-DOL" id="hfC-DG-l7F"/>
+                        <segue destination="k1Z-Ud-dPD" kind="show" identifier="FavoritesListToDetail" id="yI3-4q-Fxi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13z-QM-6RE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3367" y="92"/>
+            <point key="canvasLocation" x="-2536" y="91"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="6yF-X0-zyL">
@@ -458,9 +459,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oNS-A9-NZ5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1590" y="779"/>
+            <point key="canvasLocation" x="-1123" y="350"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="yI3-4q-Fxi"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="person.2" catalog="system" width="128" height="81"/>

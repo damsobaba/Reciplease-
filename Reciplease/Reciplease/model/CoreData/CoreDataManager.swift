@@ -40,18 +40,18 @@ final class CoreDataManager {
           }
           coreDataStack.saveContext()
       }
-    
+  
     
     // MARK: - Manage Task Entity
 
-    func createIngredients(name: String, image: String, yield: String, totalTime: String, ingredients: [String]) {
+    func createIngredients(name: String, image: String, yield: String, totalTime: String, ingredients: [String], url: String) {
         let food = FavoriteFood(context: managedObjectContext)
         food.name = name
         food.image = image
         food.yield = yield
         food.totaTime = totalTime
-        food.ingredients = ingredients.joined()
-        
+        food.ingredients = ingredients
+        food.url = url
         coreDataStack.saveContext()
     }
 
@@ -59,4 +59,8 @@ final class CoreDataManager {
         favoriteFood.forEach { managedObjectContext.delete($0) }
         coreDataStack.saveContext()
     }
+    
+    
+  
+
 }

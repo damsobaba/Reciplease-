@@ -12,6 +12,7 @@ class FavoriteViewController: UIViewController {
     @IBOutlet var favoriteTableView: UITableView!
     
     private var coreDataManager: CoreDataManager?
+    var recipeDisplay: RecipeDisplay?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,12 @@ class FavoriteViewController: UIViewController {
             super.viewWillAppear(true)
         favoriteTableView.reloadData()
         }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+           guard segue.identifier == "FavoritesListToDetail" else {return}
+           guard let recipesVc = segue.destination as? DetailViewController else {return}
+           recipesVc.recipeDisplay = recipeDisplay
+       }
     
 }
 
@@ -42,6 +49,22 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         cell.favoriteRecipe = coreDataManager?.favoriteFood[indexPath.row]
         return cell
     }
+    
+    
+    // cell selected to call
+      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+          let favoriteRecipe = coreDataManager?.favoriteFood[indexPath.row]
+        
+   
+        let recipeDisplay = RecipeDisplay(label: (favoriteRecipe!.name)!,image: (favoriteRecipe!.image)!, yield: (String((favoriteRecipe!.yield)!)) ,time: (String((favoriteRecipe?.totaTime)!)), ingredients: (favoriteRecipe?.ingredients)!, url: (favoriteRecipe?.url)!)
+        
+          self.recipeDisplay = recipeDisplay
+        
+        
+          performSegue(withIdentifier: "FavoritesListToDetail", sender: nil)
+      }
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 200

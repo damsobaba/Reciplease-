@@ -5,6 +5,7 @@
 //  Created by Adam Mabrouki on 08/12/2020.
 //
 
+import UIKit
 import Foundation
 enum NetworkError: Error {
     case noData, noResponse, undecodableData

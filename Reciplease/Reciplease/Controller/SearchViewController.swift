@@ -48,7 +48,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate{
                 self.recipes = search
                 self.performSegue(withIdentifier: "Result", sender: nil)
             case .failure(let error):
-                self.presentAlert()
+                if error == .noData {
+                    self.presentAlertSignal()
+                } else { self.presentAlertWrongIngredientsEnter()
+                }
                 self.toggleActivityIndicator(shown: false)
                 print(error)
             }
@@ -132,13 +135,13 @@ extension SearchViewController: UITableViewDelegate  {
     }
     
     // delete a row in tableView
-        func tableView(_ tableView: UITableView,
-                       commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-            if editingStyle == .delete {
-                ingredients.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            ingredients.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
-
+    }
+    
 }
 

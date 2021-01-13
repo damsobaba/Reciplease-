@@ -42,19 +42,33 @@ class DetailViewController: UIViewController {
     
     func updatView() {
         recipeTitleLabel.text = recipeDisplay?.label
-        recipeImageView.load(url: URL(string: recipeDisplay!.image)!)
-        totalTimeLabel.text = recipeDisplay!.time
+//        recipeImageView.load(url: URL(string: recipeDisplay!.image)!)
+        totalTimeLabel.text = recipeDisplay?.time
         yieldLabel.text = recipeDisplay?.yield
         
     }
+ 
     
     
-    @IBAction func addToFavoriteButtonTapped(_ sender: Any) {
+    
+    @IBAction func addToFavoriteButtonTapped(_ sender: UIBarButtonItem) {
         
-        guard let name = recipeDisplay?.label, let image = recipeDisplay?.image, let yied = recipeDisplay?.yield, let totalTime = recipeDisplay?.time, let  ingredients = recipeDisplay?.ingredients else
+        
+//        guard ((coreDataManager?.checkIfFoodIsAlreadyFavorite(foodName: recipeTitleLabel.text! )) != nil) else { return}
+            
+        if sender.image == UIImage(systemName: "star") {
+            sender.image = UIImage(systemName: "star.fill")
+        } else if
+            sender.image == UIImage(systemName: "star.fill") {
+                sender.image = UIImage(systemName: "star")
+            }
+        
+        
+        
+        guard let name = recipeDisplay?.label, let image = recipeDisplay?.image, let yied = recipeDisplay?.yield, let totalTime = recipeDisplay?.time, let  ingredients = recipeDisplay?.ingredients, let url = recipeDisplay?.url else
         { return }
         
-        coreDataManager?.createIngredients(name: name, image: image, yield: yied, totalTime: totalTime, ingredients: ingredients)
+        coreDataManager?.createIngredients(name: name, image: image, yield: yied, totalTime: totalTime, ingredients: ingredients, url: url)
         
     }
     

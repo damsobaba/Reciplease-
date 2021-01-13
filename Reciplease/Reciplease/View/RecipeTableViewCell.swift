@@ -66,7 +66,7 @@ class RecipeTableViewCell: UITableViewCell {
      
             timeLabel.text = favoriteRecipe?.totaTime
             yieldLabel.text = favoriteRecipe?.yield
-            ingredientsLabel.text = favoriteRecipe?.ingredients
+            ingredientsLabel.text = favoriteRecipe?.ingredients!.joined()
             recipeImageView.load(url: URL(string: (favoriteRecipe?.image)!)!)
             
         }
