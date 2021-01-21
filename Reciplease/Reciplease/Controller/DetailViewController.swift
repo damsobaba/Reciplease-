@@ -37,33 +37,26 @@ class DetailViewController: UIViewController {
     ///enable to show activiy controler while loading
     private func toggleActivityIndicator(shown: Bool) {
         activityIndicator.isHidden = !shown
-    
+        
     }
     
     func updatView() {
         recipeTitleLabel.text = recipeDisplay?.label
-//        recipeImageView.load(url: URL(string: recipeDisplay!.image)!)
+        recipeImageView.image = UIImage(data: recipeDisplay?.image ?? Data())
         totalTimeLabel.text = recipeDisplay?.time
         yieldLabel.text = recipeDisplay?.yield
         
     }
- 
-    
-    
     
     @IBAction func addToFavoriteButtonTapped(_ sender: UIBarButtonItem) {
         
-        
-//        guard ((coreDataManager?.checkIfFoodIsAlreadyFavorite(foodName: recipeTitleLabel.text! )) != nil) else { return}
-            
+        // mettre la methode qui check si la recette est en favorie
         if sender.image == UIImage(systemName: "star") {
             sender.image = UIImage(systemName: "star.fill")
         } else if
             sender.image == UIImage(systemName: "star.fill") {
-                sender.image = UIImage(systemName: "star")
-            }
-        
-        
+            sender.image = UIImage(systemName: "star")
+        }
         
         guard let name = recipeDisplay?.label, let image = recipeDisplay?.image, let yied = recipeDisplay?.yield, let totalTime = recipeDisplay?.time, let  ingredients = recipeDisplay?.ingredients, let url = recipeDisplay?.url else
         { return }
@@ -73,10 +66,10 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func directionButtonTapped(_ sender: Any) {
-        toggleActivityIndicator(shown: true)
+    
         guard let recipeDirections = URL(string: recipeDisplay?.url ?? "") else {return}
-               UIApplication.shared.open(recipeDirections)
-        toggleActivityIndicator(shown: false)
+        UIApplication.shared.open(recipeDirections)
+    
     }
     
 }
@@ -89,13 +82,12 @@ extension DetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let recipeDisplay = recipeDisplay else { return UITableViewCell() }
-            
+        
         let ingredientCell = tableView.dequeueReusableCell(withIdentifier: "IngredientsDetailCell", for: indexPath)
         let ingredient = recipeDisplay.ingredients[indexPath.row]
         ingredientCell.textLabel?.textColor = UIColor.white
         ingredientCell.textLabel?.text = "- \(ingredient)"
-        print ("\(ingredient)")
-    
+        
         return ingredientCell
     }
 }

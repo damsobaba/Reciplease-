@@ -27,6 +27,11 @@ class RecipeViewController: UIViewController {
         guard let recipesVc = segue.destination as? DetailViewController else {return}
              recipesVc.recipeDisplay = recipeDisplay
          }
+    func loadImageDataFromUrl(stringImageUrl: String) -> Data{
+           guard let imageUrl = URL(string: stringImageUrl) else {return Data()}
+           guard let data = try? Data(contentsOf: imageUrl) else {return Data()}
+           return data
+       }
 
 }
 
@@ -50,7 +55,7 @@ extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let recipe = recipes?.hits[indexPath.row]
-        let recipeDisplay = RecipeDisplay(label: (recipe?.recipe.label)!,image: (recipe?.recipe.image)!, yield: (String((recipe?.recipe.yield)!)) ,time: (String((recipe?.recipe.totalTime.convertIntToTime)!)), ingredients: (recipe?.recipe.ingredientLines)!, url: (recipe?.recipe.url)!)
+        let recipeDisplay = RecipeDisplay(label: (recipe?.recipe.label)!,image: loadImageDataFromUrl(stringImageUrl: (recipe?.recipe.image)!) , yield: (String((recipe?.recipe.yield)!)) ,time: (String((recipe?.recipe.totalTime.convertIntToTime)!)), ingredients: (recipe?.recipe.ingredientLines)!, url: (recipe?.recipe.url)!)
         
           self.recipeDisplay = recipeDisplay
               

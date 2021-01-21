@@ -50,7 +50,18 @@ class RecipeTableViewCell: UITableViewCell {
             guard let recipe = recipe else { return }
             
             titleLabel.text = recipe.recipe.label
-            recipeImageView.load(url: URL(string: recipe.recipe.image)!)
+            
+            guard let image = recipe.recipe.image else {return}
+            guard let url = URL(string: image) else {return}
+                        DispatchQueue.global().async {
+                            let data = try? Data(contentsOf: url)
+                            DispatchQueue.main.async {
+                                self.recipeImageView.image = UIImage(data: data! as Data)
+                            }
+                        }
+                   
+            
+//            recipeImageView.load(url: URL(string: recipe.recipe.image)!)
             timeLabel.text = recipe.recipe.totalTime.convertIntToTime 
             yieldLabel.text = String(recipe.recipe.yield)
             ingredientsLabel.text = recipe.recipe.ingredients[0].text
@@ -67,11 +78,15 @@ class RecipeTableViewCell: UITableViewCell {
             timeLabel.text = favoriteRecipe?.totaTime
             yieldLabel.text = favoriteRecipe?.yield
             ingredientsLabel.text = favoriteRecipe?.ingredients!.joined()
-            recipeImageView.load(url: URL(string: (favoriteRecipe?.image)!)!)
+            recipeImageView.image = UIImage(data:  favoriteRecipe?.image ?? Data())
+//            recipeImageView.load(url: URL(string: (favoriteRecipe?.image)!)!)
             
         }
     }
 }
+
+
+
 
 extension UIImageView {
     func load(url:URL) {

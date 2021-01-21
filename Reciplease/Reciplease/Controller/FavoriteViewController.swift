@@ -14,6 +14,14 @@ class FavoriteViewController: UIViewController {
     private var coreDataManager: CoreDataManager?
     var recipeDisplay: RecipeDisplay?
     
+    
+//    @IBAction func unindWelcomeSegue(segue: UIStoryboardSegue) {
+//        segue.
+//    }
+//
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         favoriteTableView.register(UINib(nibName: "RecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "RecipeCell")
@@ -34,6 +42,20 @@ class FavoriteViewController: UIViewController {
            recipesVc.recipeDisplay = recipeDisplay
        }
     
+    
+    
+    @IBAction func clearButtonTapped(_ sender: Any) {
+        
+        coreDataManager?.deleteAllIngredients()
+        favoriteTableView.reloadData()
+    
+    }
+    
+    
+    
+    
+    
+    
 }
 
 extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
@@ -50,8 +72,7 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
-    // cell selected to call
+
       func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
           let favoriteRecipe = coreDataManager?.favoriteFood[indexPath.row]
         
@@ -69,14 +90,5 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         
         return 200
     }
-//     asks data source to verify that the given row is editable
-       func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-           return true
-       }
-//        delete a favorite recipe in tableView
-       func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-           guard let recipeName = coreDataManager?.favoriteFood[indexPath.row].name else {return}
-           coreDataManager?.deleteRecipeFromFavorite(recipeName: recipeName)
-           favoriteTableView.reloadData()
-       }
+
 }

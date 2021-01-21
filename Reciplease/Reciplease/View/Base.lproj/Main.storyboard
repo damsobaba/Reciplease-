@@ -44,7 +44,14 @@
                             <outlet property="delegate" destination="dla-jp-FRP" id="5TC-OV-RRC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Favorite" id="QbA-6y-QSm"/>
+                    <navigationItem key="navigationItem" title="Favorite" id="QbA-6y-QSm">
+                        <barButtonItem key="rightBarButtonItem" title="Clear all" id="Dtz-Lr-QCE">
+                            <color key="tintColor" systemColor="secondarySystemBackgroundColor"/>
+                            <connections>
+                                <action selector="clearButtonTapped:" destination="dla-jp-FRP" id="is6-6V-Wlc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="favoriteTableView" destination="YH2-dv-DOL" id="hfC-DG-l7F"/>
                         <segue destination="k1Z-Ud-dPD" kind="show" identifier="FavoritesListToDetail" id="yI3-4q-Fxi"/>
@@ -463,7 +470,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yI3-4q-Fxi"/>
+        <segue reference="S2X-qX-1zF"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
@@ -472,6 +479,9 @@
         <image name="timer" catalog="system" width="128" height="121"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

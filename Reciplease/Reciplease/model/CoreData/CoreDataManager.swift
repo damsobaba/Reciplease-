@@ -31,20 +31,12 @@ final class CoreDataManager {
     }
 
     
-    func deleteRecipeFromFavorite(recipeName: String) {
-          let request: NSFetchRequest<FavoriteFood> = FavoriteFood.fetchRequest()
-          let predicate = NSPredicate(format: "name == %@", recipeName)
-          request.predicate = predicate
-          if let objects = try? managedObjectContext.fetch(request) {
-              objects.forEach { managedObjectContext.delete($0)}
-          }
-          coreDataStack.saveContext()
-      }
+   
   
     
     // MARK: - Manage Task Entity
 
-    func createIngredients(name: String, image: String, yield: String, totalTime: String, ingredients: [String], url: String) {
+    func createIngredients(name: String, image: Data, yield: String, totalTime: String, ingredients: [String], url: String) {
         let food = FavoriteFood(context: managedObjectContext)
         food.name = name
         food.image = image
@@ -59,6 +51,31 @@ final class CoreDataManager {
         favoriteFood.forEach { managedObjectContext.delete($0) }
         coreDataStack.saveContext()
     }
+    
+//    func someEntityExists( name: String) -> Bool {
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+//        if type == "String"{
+//        fetchRequest.predicate = NSPredicate(format: "\(fieldName) == %@", id)
+//        }else{
+//            fetchRequest.predicate = NSPredicate(format: "\(fieldName) == %d", id)
+//
+//        }
+//
+//        var results: [NSManagedObject] = []
+//
+//        do {
+//            results = try self.persistentContainer.viewContext.fetch(fetchRequest)
+//        }
+//        catch {
+//            print("error executing fetch request: \(error)")
+//        }
+//
+//        return results.count > 0
+//    }
+//    
+    
+    
+    
     
     
   
