@@ -30,17 +30,22 @@ class DetailViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
         let coreDataStack = appDelegate.coreDataStack
         coreDataManager = CoreDataManager(coreDataStack: coreDataStack)
-        updatView()
+        updateView()
+        updateFavorite()
+    }
+    
+
+    func updateFavorite() {
+        guard coreDataManager?.checkIfRecipeIsAlreadyFavorite(recipeName: recipeTitleLabel.text ?? "") == true else {
+           favoriteButton.image = UIImage(systemName: "star")
+            return }
+            favoriteButton.image = UIImage(systemName: "star.fill")
     }
     
     
-    ///enable to show activiy controler while loading
-    private func toggleActivityIndicator(shown: Bool) {
-        activityIndicator.isHidden = !shown
-        
-    }
     
-    func updatView() {
+    
+    func updateView() {
         recipeTitleLabel.text = recipeDisplay?.label
         recipeImageView.image = UIImage(data: recipeDisplay?.image ?? Data())
         totalTimeLabel.text = recipeDisplay?.time
@@ -48,22 +53,30 @@ class DetailViewController: UIViewController {
         
     }
     
-    @IBAction func addToFavoriteButtonTapped(_ sender: UIBarButtonItem) {
-        
-        // mettre la methode qui check si la recette est en favorie
-        if sender.image == UIImage(systemName: "star") {
-            sender.image = UIImage(systemName: "star.fill")
-        } else if
-            sender.image == UIImage(systemName: "star.fill") {
-            sender.image = UIImage(systemName: "star")
-        }
-        
+    func addRecipeToFavorite() {
         guard let name = recipeDisplay?.label, let image = recipeDisplay?.image, let yied = recipeDisplay?.yield, let totalTime = recipeDisplay?.time, let  ingredients = recipeDisplay?.ingredients, let url = recipeDisplay?.url else
         { return }
         
         coreDataManager?.createIngredients(name: name, image: image, yield: yied, totalTime: totalTime, ingredients: ingredients, url: url)
         
     }
+    
+    @IBAction func addToFavoriteButtonTapped(_ sender: UIBarButtonItem) {
+        // when recipe isn't in favorite list to add it, alert user
+            if sender.image == UIImage(systemName: "star") {
+                sender.image = UIImage(systemName: "star.fill")
+                addRecipeToFavorite()
+ 
+            } else if sender.image == UIImage(systemName: "star.fill") {
+                sender.image = UIImage(systemName: "star")
+                coreDataManager?.deleteFromFavorite(recipeName: recipeDisplay?.label ?? "")
+                
+                // implmenter methode qui dit que si on est dans l'interface favoris on revient auto en arriere
+            }
+        
+        }
+      
+    
     
     @IBAction func directionButtonTapped(_ sender: Any) {
     
