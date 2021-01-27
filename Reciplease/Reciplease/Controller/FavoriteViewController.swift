@@ -28,9 +28,8 @@ class FavoriteViewController: UIViewController {
         guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let coredataStack = appdelegate.coreDataStack
         coreDataManager = CoreDataManager(coreDataStack: coredataStack)
-      
-      
     }
+    
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(true)
         favoriteTableView.reloadData()
@@ -62,19 +61,19 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return coreDataManager?.favoriteFood.count ?? 0
+        return coreDataManager?.favoriteFoods.count ?? 0
     } //c
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeTableViewCell else {
             return UITableViewCell()
         }
-        cell.favoriteRecipe = coreDataManager?.favoriteFood[indexPath.row]
+        cell.favoriteRecipe = coreDataManager?.favoriteFoods[indexPath.row]
         return cell
     }
     
 
       func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-          let favoriteRecipe = coreDataManager?.favoriteFood[indexPath.row]
+          let favoriteRecipe = coreDataManager?.favoriteFoods[indexPath.row]
         
    
         let recipeDisplay = RecipeDisplay(label: (favoriteRecipe!.name)!,image: (favoriteRecipe!.image)!, yield: (String((favoriteRecipe!.yield)!)) ,time: (String((favoriteRecipe?.totaTime)!)), ingredients: (favoriteRecipe?.ingredients)!, url: (favoriteRecipe?.url)!)

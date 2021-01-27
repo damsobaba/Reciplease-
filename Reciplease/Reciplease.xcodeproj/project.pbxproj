@@ -15,7 +15,7 @@
 		CE8AB81725B9C7B100FC7302 /* FakeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8AB81625B9C7B100FC7302 /* FakeSession.swift */; };
 		CE8AB81B25B9D2B500FC7302 /* recipe.json in Resources */ = {isa = PBXBuildFile; fileRef = CE8AB81A25B9D2B500FC7302 /* recipe.json */; };
 		CE8F18D725A874E700304435 /* UIViewControler+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8F18D625A874E700304435 /* UIViewControler+Alert.swift */; };
-		CE8F18E625A896B400304435 /* ExtansionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8F18E525A896B400304435 /* ExtansionString.swift */; };
+		CE8F18E625A896B400304435 /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8F18E525A896B400304435 /* ExtensionString.swift */; };
 		CE8F18EB25A898E300304435 /* APIconfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8F18EA25A898E300304435 /* APIconfig.swift */; };
 		CE91F5F72593812F0055C140 /* RecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91F5F52593812F0055C140 /* RecipeTableViewCell.swift */; };
 		CE9BF034257FAF0500A64593 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9BF033257FAF0500A64593 /* AppDelegate.swift */; };
@@ -65,7 +65,7 @@
 		CE8AB81625B9C7B100FC7302 /* FakeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSession.swift; sourceTree = "<group>"; };
 		CE8AB81A25B9D2B500FC7302 /* recipe.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = recipe.json; sourceTree = "<group>"; };
 		CE8F18D625A874E700304435 /* UIViewControler+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewControler+Alert.swift"; sourceTree = "<group>"; };
-		CE8F18E525A896B400304435 /* ExtansionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtansionString.swift; sourceTree = "<group>"; };
+		CE8F18E525A896B400304435 /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
 		CE8F18EA25A898E300304435 /* APIconfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIconfig.swift; sourceTree = "<group>"; };
 		CE91F5F52593812F0055C140 /* RecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTableViewCell.swift; sourceTree = "<group>"; };
 		CE9BF030257FAF0500A64593 /* Reciplease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reciplease.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,11 +125,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CE112E7B25C0156F002D9955 /* CoreDataTest */ = {
+			isa = PBXGroup;
+			children = (
+				CE8AB7FE25B1B16100FC7302 /* CoreDataManagerTest.swift */,
+				CE8AB7F925B1B11600FC7302 /* MockCoreDataStack.swift */,
+			);
+			path = CoreDataTest;
+			sourceTree = "<group>";
+		};
 		CE8F18DE25A8752800304435 /* Extansion */ = {
 			isa = PBXGroup;
 			children = (
 				CE8F18D625A874E700304435 /* UIViewControler+Alert.swift */,
-				CE8F18E525A896B400304435 /* ExtansionString.swift */,
+				CE8F18E525A896B400304435 /* ExtensionString.swift */,
 			);
 			path = Extansion;
 			sourceTree = "<group>";
@@ -173,12 +182,11 @@
 		CE9BF04C257FAF0800A64593 /* RecipleaseTests */ = {
 			isa = PBXGroup;
 			children = (
+				CE9BF04D257FAF0800A64593 /* RecipleaseTests.swift */,
+				CE8AB81625B9C7B100FC7302 /* FakeSession.swift */,
 				CE8AB81025B9C71400FC7302 /* FakeResponseData.swift */,
 				CE8AB81A25B9D2B500FC7302 /* recipe.json */,
-				CE8AB81625B9C7B100FC7302 /* FakeSession.swift */,
-				CE9BF04D257FAF0800A64593 /* RecipleaseTests.swift */,
-				CE8AB7F925B1B11600FC7302 /* MockCoreDataStack.swift */,
-				CE8AB7FE25B1B16100FC7302 /* CoreDataManagerTest.swift */,
+				CE112E7B25C0156F002D9955 /* CoreDataTest */,
 				CE9BF04F257FAF0800A64593 /* Info.plist */,
 			);
 			path = RecipleaseTests;
@@ -420,7 +428,7 @@
 				CE9BF038257FAF0500A64593 /* SearchViewController.swift in Sources */,
 				CE91F5F72593812F0055C140 /* RecipeTableViewCell.swift in Sources */,
 				CEE1B23325825B9000A161AB /* FavoriteViewController.swift in Sources */,
-				CE8F18E625A896B400304435 /* ExtansionString.swift in Sources */,
+				CE8F18E625A896B400304435 /* ExtensionString.swift in Sources */,
 				CE08966C258761C30071FCF3 /* Logger.swift in Sources */,
 				CEF139FC2588175B00991948 /* CoreDataManager.swift in Sources */,
 				CE9BF07E257FB3F400A64593 /* ReceipeSession.swift in Sources */,

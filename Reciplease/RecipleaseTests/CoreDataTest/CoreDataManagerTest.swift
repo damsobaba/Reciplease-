@@ -32,16 +32,16 @@ import XCTest
 
         func testAddTeskMethods_WhenAnEntityIsCreated_ThenShouldBeCorrectlySaved() {
             // renomer la methode
-            coreDataManager.createIngredients(name: "potatoe", image: Data(), yield: "", totalTime:"", ingredients: [""], url: "https://api.edamam.com/search?q=potatoe")
-            XCTAssertTrue(!coreDataManager.favoriteFood.isEmpty)
-            XCTAssertTrue(coreDataManager.favoriteFood.count == 1)
-            XCTAssertTrue(coreDataManager.favoriteFood[0].name! == "potatoe")
+            coreDataManager.createRecipe(name: "potatoe", image: Data(), yield: "", totalTime:"", ingredients: [""], url: "https://api.edamam.com/search?q=potatoe")
+            XCTAssertTrue(!coreDataManager.favoriteFoods.isEmpty)
+            XCTAssertTrue(coreDataManager.favoriteFoods.count == 1)
+            XCTAssertTrue(coreDataManager.favoriteFoods[0].name! == "potatoe")
         }
 
         func testDeleteAllTasksMethod_WhenAnEntityIsCreated_ThenShouldBeCorrectlyDeleted() {
-            coreDataManager.createIngredients(name: "potatoe", image: Data(), yield: "", totalTime: "", ingredients: [""], url: "https://api.edamam.com/search?q=potatoe")
+            coreDataManager.createRecipe(name: "potatoe", image: Data(), yield: "", totalTime: "", ingredients: [""], url: "https://api.edamam.com/search?q=potatoe")
             coreDataManager.deleteAllIngredients()
-            XCTAssertTrue(coreDataManager.favoriteFood.isEmpty)
+            XCTAssertTrue(coreDataManager.favoriteFoods.isEmpty)
         }
         
         

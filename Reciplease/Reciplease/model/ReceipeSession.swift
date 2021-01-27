@@ -11,7 +11,7 @@ import Alamofire
 protocol AlamofireSession {
     func request(url: URL, callback: @escaping (AFDataResponse<Any>) -> Void)
 }
-private var task: URLSessionDataTask?
+
 final class ReceipeSession: AlamofireSession {
     
     func request(url: URL, callback: @escaping (AFDataResponse<Any>) -> Void) {

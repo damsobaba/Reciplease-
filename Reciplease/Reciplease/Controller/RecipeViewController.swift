@@ -20,19 +20,15 @@ class RecipeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "DetailRecipe" else {
-            return
-        }
+        guard segue.identifier == "DetailRecipe" else { return }
         
         guard let recipesVc = segue.destination as? DetailViewController else {return}
-             recipesVc.recipeDisplay = recipeDisplay
-         }
-    func loadImageDataFromUrl(stringImageUrl: String) -> Data{
-           guard let imageUrl = URL(string: stringImageUrl) else {return Data()}
-           guard let data = try? Data(contentsOf: imageUrl) else {return Data()}
-           return data
-       }
-
+        recipesVc.recipeDisplay = recipeDisplay
+    }
+    
+    
+   
+    
 }
 
 
@@ -52,13 +48,16 @@ extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.recipe = recipes?.hits[indexPath.row]
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let recipe = recipes?.hits[indexPath.row]
-        let recipeDisplay = RecipeDisplay(label: (recipe?.recipe.label)!,image: loadImageDataFromUrl(stringImageUrl: (recipe?.recipe.image)!) , yield: (String((recipe?.recipe.yield)!)) ,time: (String((recipe?.recipe.totalTime.convertIntToTime)!)), ingredients: (recipe?.recipe.ingredientLines)!, url: (recipe?.recipe.url)!)
         
-          self.recipeDisplay = recipeDisplay
-              
+        guard let label = recipe?.recipe.label, let image = recipe?.recipe.image, let yield = recipe?.recipe.yield, let time = recipe?.recipe.totalTime.convertIntToTime, let ingredients = recipe?.recipe.ingredientLines , let url = recipe?.recipe.url else { return }
+        
+        let recipeDisplay = RecipeDisplay(label: label ,image: image.data , yield: String(yield) ,time: String(time), ingredients: ingredients, url: url )
+        
+        self.recipeDisplay = recipeDisplay
+        
         performSegue(withIdentifier:"DetailRecipe", sender: nil)
     }
     
@@ -70,5 +69,5 @@ extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
 
 
 
- 
+
 

@@ -48,10 +48,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate{
                 self.recipes = search
                 self.performSegue(withIdentifier: "Result", sender: nil)
             case .failure(let error):
-                if error == .noData {
-                    self.presentAlertSignal()
-                } else { self.presentAlertWrongIngredientsEnter()
-                }
+                error == .noData ? self.presentAlertSignal() : self.presentAlertWrongIngredientsEnter()
                 self.toggleActivityIndicator(shown: false)
                 print(error)
             }

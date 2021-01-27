@@ -21,7 +21,6 @@ class DetailViewController: UIViewController {
     
     private var coreDataManager: CoreDataManager?
     
-    var recipe: Recipe?
     
     var recipeDisplay: RecipeDisplay?
     
@@ -36,7 +35,7 @@ class DetailViewController: UIViewController {
     
 
     func updateFavorite() {
-        guard coreDataManager?.checkIfRecipeIsAlreadyFavorite(recipeName: recipeTitleLabel.text ?? "") == true else {
+        guard coreDataManager?.checkIfRecipeIsAlreadyFavorite(recipeName: recipeDisplay?.label ?? "") == true else {
            favoriteButton.image = UIImage(systemName: "star")
             return }
             favoriteButton.image = UIImage(systemName: "star.fill")
@@ -46,8 +45,15 @@ class DetailViewController: UIViewController {
     
     
     func updateView() {
+        let defaultImage =  UIImage(named: "rectteDefault")
+        
         recipeTitleLabel.text = recipeDisplay?.label
-        recipeImageView.image = UIImage(data: recipeDisplay?.image ?? Data())
+        
+         guard let image = recipeDisplay?.image else { return }
+        
+        recipeImageView.image = UIImage(data: image) ?? defaultImage
+        
+        // importer image par default de asset
         totalTimeLabel.text = recipeDisplay?.time
         yieldLabel.text = recipeDisplay?.yield
         
@@ -57,7 +63,7 @@ class DetailViewController: UIViewController {
         guard let name = recipeDisplay?.label, let image = recipeDisplay?.image, let yied = recipeDisplay?.yield, let totalTime = recipeDisplay?.time, let  ingredients = recipeDisplay?.ingredients, let url = recipeDisplay?.url else
         { return }
         
-        coreDataManager?.createIngredients(name: name, image: image, yield: yied, totalTime: totalTime, ingredients: ingredients, url: url)
+        coreDataManager?.createRecipe(name: name, image: image, yield: yied, totalTime: totalTime, ingredients: ingredients, url: url)
         
     }
     
@@ -90,7 +96,7 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (recipeDisplay?.ingredients.count)!
+        return recipeDisplay?.ingredients.count ?? 00
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -104,7 +110,5 @@ extension DetailViewController: UITableViewDataSource {
         return ingredientCell
     }
 }
-
-
 
 

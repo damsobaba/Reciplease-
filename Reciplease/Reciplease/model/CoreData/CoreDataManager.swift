@@ -16,7 +16,7 @@ final class CoreDataManager {
     private let coreDataStack: CoreDataStack
     private let managedObjectContext: NSManagedObjectContext
     
-    var favoriteFood: [FavoriteFood] {
+    var favoriteFoods: [FavoriteFood] {
         let request: NSFetchRequest<FavoriteFood> = FavoriteFood.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         guard let tasks = try? managedObjectContext.fetch(request) else { return [] }
@@ -36,7 +36,7 @@ final class CoreDataManager {
     
     // MARK: - Manage Task Entity
     
-    func createIngredients(name: String, image: Data, yield: String, totalTime: String, ingredients: [String], url: String) {
+    func createRecipe(name: String, image: Data, yield: String, totalTime: String, ingredients: [String], url: String) {
         let food = FavoriteFood(context: managedObjectContext)
         food.name = name
         food.image = image
@@ -48,7 +48,7 @@ final class CoreDataManager {
     }
     
     func deleteAllIngredients() {
-        favoriteFood.forEach { managedObjectContext.delete($0) }
+        favoriteFoods.forEach { managedObjectContext.delete($0) }
         coreDataStack.saveContext()
     }
     
@@ -57,16 +57,10 @@ final class CoreDataManager {
         let request: NSFetchRequest<FavoriteFood> = FavoriteFood.fetchRequest()
         let predicate = NSPredicate(format: "name == %@", recipeName)
         request.predicate = predicate
-        request.fetchLimit = 1
-        do {
-            let count = try managedObjectContext.fetch(request)
-            if count.isEmpty {
+        guard let favoritesFoods = try? managedObjectContext.fetch(request) else { return false }
+            if favoritesFoods.isEmpty {
                 return false
             }
-        }
-        catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
         return true
     }
     
@@ -76,10 +70,10 @@ final class CoreDataManager {
         let request: NSFetchRequest<FavoriteFood> = FavoriteFood.fetchRequest()
         let predicate = NSPredicate(format: "name == %@", recipeName)
         request.predicate = predicate
-        request.fetchLimit = 1
         
-            let objects = try? managedObjectContext.fetch(request)
-            objects!.forEach { managedObjectContext.delete($0)}
+        
+        guard let objects = try? managedObjectContext.fetch(request) else { return }
+            objects.forEach { managedObjectContext.delete($0)}
         coreDataStack.saveContext()
             }
        
