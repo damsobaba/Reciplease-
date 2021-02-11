@@ -27,7 +27,7 @@ final class RequestService {
     }
 
     // MARK: - Management
-
+    /// Method to send request with the API
     func getData(q: String,  callback: @escaping (Result<Recipes, NetworkError>) -> Void) {
         guard let url = URL(string: "https://api.edamam.com/search") else { return }
         let parameters =  [("app_id", ApiConfig.apiId), ("app_key", ApiConfig.apiKey), ("q", q)]

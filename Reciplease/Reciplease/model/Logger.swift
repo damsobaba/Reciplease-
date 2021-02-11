@@ -12,7 +12,7 @@ import Foundation
 struct Logger {
 
     // MARK: - Properties
-    var url: URL
+      var url: URL
     private var request: URLRequest {
         return URLRequest(url: url)
     }

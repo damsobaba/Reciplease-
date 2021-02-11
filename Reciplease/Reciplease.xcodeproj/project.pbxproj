@@ -134,13 +134,13 @@
 			path = CoreDataTest;
 			sourceTree = "<group>";
 		};
-		CE8F18DE25A8752800304435 /* Extansion */ = {
+		CE8F18DE25A8752800304435 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				CE8F18D625A874E700304435 /* UIViewControler+Alert.swift */,
 				CE8F18E525A896B400304435 /* ExtensionString.swift */,
 			);
-			path = Extansion;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		CE9BF027257FAF0500A64593 = {
@@ -168,7 +168,7 @@
 			children = (
 				CE9BF033257FAF0500A64593 /* AppDelegate.swift */,
 				CE9BF035257FAF0500A64593 /* SceneDelegate.swift */,
-				CE8F18DE25A8752800304435 /* Extansion */,
+				CE8F18DE25A8752800304435 /* Extensions */,
 				CE9BF06E257FB37600A64593 /* model */,
 				CE9BF085257FB40200A64593 /* Controller */,
 				CE9BF086257FB41000A64593 /* View */,
@@ -212,8 +212,8 @@
 			children = (
 				CE9BF037257FAF0500A64593 /* SearchViewController.swift */,
 				CEE1B22D25823EF400A161AB /* RecipeViewController.swift */,
-				CEE1B23225825B9000A161AB /* FavoriteViewController.swift */,
 				CEF82155259D32C600C28A31 /* DetailViewController.swift */,
+				CEE1B23225825B9000A161AB /* FavoriteViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -535,7 +535,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -590,7 +590,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -616,7 +616,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.adammab.Reciplease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -636,7 +636,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.adammab.Reciplease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

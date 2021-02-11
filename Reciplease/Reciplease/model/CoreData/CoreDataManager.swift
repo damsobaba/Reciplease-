@@ -30,12 +30,8 @@ final class CoreDataManager {
         self.managedObjectContext = coreDataStack.mainContext
     }
     
-    
-    
-    
-    
     // MARK: - Manage Task Entity
-    
+    /// Manage  Favorite Recipes List entities
     func createRecipe(name: String, image: Data, yield: String, totalTime: String, ingredients: [String], url: String) {
         let food = FavoriteFood(context: managedObjectContext)
         food.name = name
@@ -46,8 +42,8 @@ final class CoreDataManager {
         food.url = url
         coreDataStack.saveContext()
     }
-    
-    func deleteAllIngredients() {
+    /// Delete all
+    func deleteAllRecipe() {
         favoriteFoods.forEach { managedObjectContext.delete($0) }
         coreDataStack.saveContext()
     }
@@ -58,9 +54,9 @@ final class CoreDataManager {
         let predicate = NSPredicate(format: "name == %@", recipeName)
         request.predicate = predicate
         guard let favoritesFoods = try? managedObjectContext.fetch(request) else { return false }
-            if favoritesFoods.isEmpty {
-                return false
-            }
+        if favoritesFoods.isEmpty {
+            return false
+        }
         return true
     }
     
@@ -70,20 +66,10 @@ final class CoreDataManager {
         let request: NSFetchRequest<FavoriteFood> = FavoriteFood.fetchRequest()
         let predicate = NSPredicate(format: "name == %@", recipeName)
         request.predicate = predicate
-        
-        
         guard let objects = try? managedObjectContext.fetch(request) else { return }
-            objects.forEach { managedObjectContext.delete($0)}
+        objects.forEach { managedObjectContext.delete($0)}
         coreDataStack.saveContext()
-            }
-       
-    
-    
-    
-    
-    
-    
-     
+    }
 }
 
 

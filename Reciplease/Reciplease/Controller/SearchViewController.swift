@@ -60,7 +60,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate{
     //MARK: - Methods
     
     // Method to dissmiss keyboard when user tap on "done"
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+       func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

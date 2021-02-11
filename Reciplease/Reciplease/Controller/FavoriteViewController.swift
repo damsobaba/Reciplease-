@@ -15,10 +15,7 @@ class FavoriteViewController: UIViewController {
     var recipeDisplay: RecipeDisplay?
     
     
-//    @IBAction func unindWelcomeSegue(segue: UIStoryboardSegue) {
-//        segue.
-//    }
-//
+    
     
     
     
@@ -31,30 +28,24 @@ class FavoriteViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(true)
+        super.viewWillAppear(true)
         favoriteTableView.reloadData()
-        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-           guard segue.identifier == "FavoritesListToDetail" else {return}
-           guard let recipesVc = segue.destination as? DetailViewController else {return}
-           recipesVc.recipeDisplay = recipeDisplay
-       }
+        guard segue.identifier == "FavoritesListToDetail" else {return}
+        guard let recipesVc = segue.destination as? DetailViewController else {return}
+        recipesVc.recipeDisplay = recipeDisplay
+    }
     
     
     
     @IBAction func clearButtonTapped(_ sender: Any) {
         
-        coreDataManager?.deleteAllIngredients()
+        coreDataManager?.deleteAllRecipe()
         favoriteTableView.reloadData()
-    
+        
     }
-    
-    
-    
-    
-    
-    
 }
 
 extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
@@ -71,23 +62,29 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-
-      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-          let favoriteRecipe = coreDataManager?.favoriteFoods[indexPath.row]
-        
-   
-        let recipeDisplay = RecipeDisplay(label: (favoriteRecipe!.name)!,image: (favoriteRecipe!.image)!, yield: (String((favoriteRecipe!.yield)!)) ,time: (String((favoriteRecipe?.totaTime)!)), ingredients: (favoriteRecipe?.ingredients)!, url: (favoriteRecipe?.url)!)
-        
-          self.recipeDisplay = recipeDisplay
-        
-        
-          performSegue(withIdentifier: "FavoritesListToDetail", sender: nil)
-      }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let favoriteRecipe = coreDataManager?.favoriteFoods[indexPath.row]
+        
+        guard let label = favoriteRecipe?.name, let image = favoriteRecipe?.image, let yield = favoriteRecipe?.yield, let time = favoriteRecipe?.totaTime, let ingredients = favoriteRecipe?.ingredients, let url = favoriteRecipe?.url else { return }
+        
+        let recipeDisplay = RecipeDisplay(label: label,image: image, yield: String(yield) ,time: String(time), ingredients: ingredients, url: url )
+        self.recipeDisplay = recipeDisplay
+        
+        performSegue(withIdentifier: "FavoritesListToDetail", sender: nil)
+    }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "Add some favorites in the list"
+        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        label.textAlignment = .center
+        label.textColor = .darkGray
+        return label
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 200
     }
-
+    
 }

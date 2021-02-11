@@ -24,12 +24,14 @@ final class FakeSession: AlamofireSession {
         self.fakeResponse = fakeResponse
     }
     
-    
-    
+
+ 
+
     func request(url: URL, callback: @escaping (AFDataResponse<Any>) -> Void) {
         let dataResponse = AFDataResponse<Any>(request: nil, response: fakeResponse.response, data: fakeResponse.data, metrics: nil, serializationDuration: 0, result: .success("OK"))
         callback(dataResponse)
     }
+    
     
     
 }

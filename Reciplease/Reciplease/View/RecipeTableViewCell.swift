@@ -40,8 +40,6 @@ class RecipeTableViewCell: UITableViewCell {
         recipeImageView.layer.shadowRadius = 40
         recipeImageView.layer.shadowOpacity = 40
         
-        
-        //            mettre ombrage sur phot
     }
   
     
@@ -59,9 +57,6 @@ class RecipeTableViewCell: UITableViewCell {
                                 self.recipeImageView.image = UIImage(data: data! as Data)
                             }
                         }
-                   
-            
-//            recipeImageView.load(url: URL(string: recipe.recipe.image)!)
             timeLabel.text = recipe.recipe.totalTime.convertIntToTime 
             yieldLabel.text = String(recipe.recipe.yield)
             ingredientsLabel.text = recipe.recipe.ingredients[0].text
@@ -79,7 +74,7 @@ class RecipeTableViewCell: UITableViewCell {
             yieldLabel.text = favoriteRecipe?.yield
             ingredientsLabel.text = favoriteRecipe?.ingredients!.joined()
             recipeImageView.image = UIImage(data:  favoriteRecipe?.image ?? Data())
-//            recipeImageView.load(url: URL(string: (favoriteRecipe?.image)!)!)
+
             
         }
     }

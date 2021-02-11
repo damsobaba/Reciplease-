@@ -25,10 +25,6 @@ class RecipeViewController: UIViewController {
         guard let recipesVc = segue.destination as? DetailViewController else {return}
         recipesVc.recipeDisplay = recipeDisplay
     }
-    
-    
-   
-    
 }
 
 

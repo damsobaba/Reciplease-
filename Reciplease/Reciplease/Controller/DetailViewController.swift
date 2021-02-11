@@ -30,26 +30,29 @@ class DetailViewController: UIViewController {
         let coreDataStack = appDelegate.coreDataStack
         coreDataManager = CoreDataManager(coreDataStack: coreDataStack)
         updateView()
-        updateFavorite()
     }
     
-
-    func updateFavorite() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateFavoriteButtonAppearance()
+    }
+    
+    private func updateFavoriteButtonAppearance() {
         guard coreDataManager?.checkIfRecipeIsAlreadyFavorite(recipeName: recipeDisplay?.label ?? "") == true else {
-           favoriteButton.image = UIImage(systemName: "star")
+            favoriteButton.image = UIImage(systemName: "star")
             return }
-            favoriteButton.image = UIImage(systemName: "star.fill")
+        favoriteButton.image = UIImage(systemName: "star.fill")
     }
     
     
     
     
-    func updateView() {
+    private func updateView() {
         let defaultImage =  UIImage(named: "rectteDefault")
         
         recipeTitleLabel.text = recipeDisplay?.label
         
-         guard let image = recipeDisplay?.image else { return }
+        guard let image = recipeDisplay?.image else { return }
         
         recipeImageView.image = UIImage(data: image) ?? defaultImage
         
@@ -59,7 +62,7 @@ class DetailViewController: UIViewController {
         
     }
     
-    func addRecipeToFavorite() {
+    private  func addRecipeToFavorite() {
         guard let name = recipeDisplay?.label, let image = recipeDisplay?.image, let yied = recipeDisplay?.yield, let totalTime = recipeDisplay?.time, let  ingredients = recipeDisplay?.ingredients, let url = recipeDisplay?.url else
         { return }
         
@@ -68,27 +71,32 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func addToFavoriteButtonTapped(_ sender: UIBarButtonItem) {
-        // when recipe isn't in favorite list to add it, alert user
-            if sender.image == UIImage(systemName: "star") {
-                sender.image = UIImage(systemName: "star.fill")
-                addRecipeToFavorite()
- 
-            } else if sender.image == UIImage(systemName: "star.fill") {
-                sender.image = UIImage(systemName: "star")
-                coreDataManager?.deleteFromFavorite(recipeName: recipeDisplay?.label ?? "")
-                
-                // implmenter methode qui dit que si on est dans l'interface favoris on revient auto en arriere
-            }
         
+        guard let coreDataManager = coreDataManager else { return }
+        guard let recipeName = recipeDisplay?.label else { return }
+        // when recipe isn't in favorite list to add it, alert user
+        if  !coreDataManager.checkIfRecipeIsAlreadyFavorite(recipeName:recipeName ) {
+            sender.image = UIImage(systemName: "star.fill")
+            addRecipeToFavorite()
+            
+        } else  {
+            sender.image = UIImage(systemName: "star")
+            coreDataManager.deleteFromFavorite(recipeName: recipeName )
+            if tabBarController?.selectedIndex == 1 {
+                navigationController?.popViewController(animated: true)
+            }
+            
         }
-      
+        
+    }
+    
     
     
     @IBAction func directionButtonTapped(_ sender: Any) {
-    
+        
         guard let recipeDirections = URL(string: recipeDisplay?.url ?? "") else {return}
         UIApplication.shared.open(recipeDirections)
-    
+        
     }
     
 }
